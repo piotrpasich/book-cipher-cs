@@ -24,17 +24,17 @@ namespace TextEncryptor {
             if (ArgsParser.GetMode() == ArgsParser.Mode.Encode) {
                 try {
                     Encoder Encoder = new Encoder(PdfParser);
-                    result = Encoder.Encode(ArgsParser.GetText());
+                    result = string.Format("Encoded text: {0}", Encoder.Encode(ArgsParser.GetText()));
                 } catch (EncodeException e) {
                     result = e.Message;
                 } catch (Exception e) {
-                    result = "Couldn't encode this string.";
+                    result = "Couldn't encode this string. ";
                 }
             }
             if (ArgsParser.GetMode() == ArgsParser.Mode.Decode) {
                 try {
                     Decoder Decoder = new Decoder(PdfParser);
-                    result = Decoder.Decode(ArgsParser.GetText());
+                    result = string.Format("Decoded text: {0}", Decoder.Decode(ArgsParser.GetText()));
                 } catch (Exception e) {
                     result = "Couldn't decode this string.";
                 }
