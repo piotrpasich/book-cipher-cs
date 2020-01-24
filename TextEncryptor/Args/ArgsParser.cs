@@ -16,11 +16,11 @@ namespace TextEncryptor.Args {
 
         public bool Validate (string[] args) {
             OptionSet p = new OptionSet() {
-                { "h|help",  "show this message and exit", v => HelpOption = v != null },
-                { "b|book=", "Path to the PDF file.", v => BookPath = v },
-                { "t|text=", "The text to encode or decode.", (string v) => Text = v },
-                { "d", "Decode mode", v => { CryptoMode = Mode.Decode; }},
-                { "e", "Encode mode(default)", v => { CryptoMode = Mode.Encode; }},
+                { "?|h|help",  "   | Shows this message and exits", v => HelpOption = v != null },
+                { "b|book=", "Path to the PDF file (ex. -b \"C:\\Users\\papi\\Downloads\\ppp.pdf\" )", v => BookPath = v },
+                { "t|text=", "The text to encode or decode. If this is not set, the text will be taken from the string included to the command.", (string v) => Text = v },
+                { "d|decrypt", "Decode mode (ex. -d or --decrypt)", v => { CryptoMode = Mode.Decode; }},
+                { "e|encrypt", "Encode mode enabled by default (ex. -e or --encrupt)", v => { CryptoMode = Mode.Encode; }},
             };
 
             List<string> extra = p.Parse(args);
@@ -39,7 +39,7 @@ namespace TextEncryptor.Args {
 
 
             if (extra.Count() > 0) {
-                Text = extra.First();
+                Text = String.Join(" ", extra);
             }
 
 
@@ -50,6 +50,9 @@ namespace TextEncryptor.Args {
 
                 return false;
             }
+
+            Console.WriteLine("Loaded Book File: " + BookPath);
+            Console.WriteLine("Text to " + (CryptoMode == Mode.Encode ? "encode" : "decode") + ": " + Text);
 
             return true;
         }
